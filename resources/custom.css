@@ -116,3 +116,13 @@ pre {
 	overflow: auto;
 	max-height: calc(100% - 130px);
 }
+
+.pre-label {
+	position: absolute;
+	left: 20px;
+	top: -25px;
+	margin: 0;
+	padding: 5px 15px;
+	font-size: 75%;
+	background: white;
+}

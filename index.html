@@ -168,82 +168,92 @@
       </article>
 
       <article>
-        <h3>&nbsp;</h3>
+        <h3>Renderowanie komponentu</h3>
         <pre>
 
-          const App = () => {
-            return &lt;div&gt;&lt;ul&gt;
-              &lt;li&gt;Przedmiot 1&lt;/li&gt;
-              &lt;li&gt;Przedmiot 2&lt;/li&gt;
-              &lt;/ul&gt;&lt;/div&gt;
+          class App extends React.Component {
+            render() {
+              return &lt;div&gt;&lt;ul&gt;
+                &lt;li&gt;Przedmiot 1&lt;/li&gt;
+                &lt;li&gt;Przedmiot 2&lt;/li&gt;
+                &lt;/ul&gt;&lt;/div&gt;
+            }
           }          
         </pre>
       </article>
 
 
       <article>
-        <h3>&nbsp;</h3>
+        <h3>Renderowanie komponentu</h3>
         <pre>
 
-          const App = () => {
-            return 
-              &lt;div&gt;
-                &lt;ul&gt;
-                  &lt;li&gt;Przedmiot 1&lt;/li&gt;
-                  &lt;li&gt;Przedmiot 2&lt;/li&gt;
-                &lt;/ul&gt;
-              &lt;/div&gt;
+          class App extends React.Component {
+            render() {
+              return 
+                &lt;div&gt;
+                  &lt;ul&gt;
+                    &lt;li&gt;Przedmiot 1&lt;/li&gt;
+                    &lt;li&gt;Przedmiot 2&lt;/li&gt;
+                  &lt;/ul&gt;
+                &lt;/div&gt;
+            }
           }          
         </pre>
       </article>
 
       <article>
-        <h3>&nbsp;</h3>
+        <h3>Renderowanie komponentu</h3>
         <pre>
 
-          const App = () => {
-            return <strong class="red">(</strong> 
-              &lt;div&gt;
-                &lt;ul&gt;
-                  &lt;li&gt;Przedmiot 1&lt;/li&gt;
-                  &lt;li&gt;Przedmiot 2&lt;/li&gt;
-                &lt;/ul&gt;
-              &lt;/div&gt;
-            <strong class="red">)</strong>
+          class App extends React.Component {
+            render() {
+              return <strong class="red">(</strong> 
+                &lt;div&gt;
+                  &lt;ul&gt;
+                    &lt;li&gt;Przedmiot 1&lt;/li&gt;
+                    &lt;li&gt;Przedmiot 2&lt;/li&gt;
+                  &lt;/ul&gt;
+                &lt;/div&gt;
+              <strong class="red">)</strong>
+            }
           }          
         </pre>
       </article>
 
       <article>
-        <h3>&nbsp;</h3>
+        <h3>Style i klasy</h3>
         <pre>
 
-          const App = () => {
-            return ( 
-              &lt;div style="margin-top: 20px;"&gt;
-                &lt;ul class="list"&gt;
-                  &lt;li&gt;Przedmiot 1&lt;/li&gt;
-                  &lt;li&gt;Przedmiot 2&lt;/li&gt;
-                &lt;/ul&gt;
-              &lt;/div&gt;
-            )
+          class App extends React.Component {
+            render() {
+              return ( 
+                &lt;div style="margin-top: 20px;"&gt;
+                  &lt;ul class="list"&gt;
+                    &lt;li&gt;Przedmiot 1&lt;/li&gt;
+                    &lt;li&gt;Przedmiot 2&lt;/li&gt;
+                  &lt;/ul&gt;
+                &lt;/div&gt;
+              )
+            }
           }          
         </pre>
       </article>
 
       <article>
-        <h3>&nbsp;</h3>
+        <h3>Style i klasy</h3>
         <pre>
 
-          const App = () => {
-            return ( 
-              &lt;div style=<strong>{{marginTop:</strong> 20px;<strong>}}</strong>&gt;
-                &lt;ul <strong>className</strong>="list"&gt;
-                  &lt;li&gt;Przedmiot 1&lt;/li&gt;
-                  &lt;li&gt;Przedmiot 2&lt;/li&gt;
-                &lt;/ul&gt;
-              &lt;/div&gt;
-            )
+          class App extends React.Component {
+            render() {
+              return ( 
+                &lt;div style=<strong>{{marginTop:</strong> 20px;<strong>}}</strong>&gt;
+                  &lt;ul <strong>className</strong>="list"&gt;
+                    &lt;li&gt;Przedmiot 1&lt;/li&gt;
+                    &lt;li&gt;Przedmiot 2&lt;/li&gt;
+                  &lt;/ul&gt;
+                &lt;/div&gt;
+              )
+            }
           }          
         </pre>
       </article>
@@ -282,109 +292,102 @@
         </pre>
       </article>
 
-
-
-
-
-
-
-      <!-- EXAMPLE 2: Slide with some code -->
       <article>
-          <h3>Slide title</h3>
-          <p>Code bellow is pretty interesting:</p>
-          <!-- You will get syntax highlighting for free! -->
-          <pre>
-int randomNumber() {
-    return 4; // chosen by fair dice roll.
-              // guaranteed to be random.
-}</pre>
-          <p>But if you wish to only mention small part of it use this: <code>randomNumber()</code></p>
+        <h3>Props</h3>
+        <div style="position: relative;">
+        <p class="pre-label">Plik List.js</p>
+        <pre>
+
+          class List extends React.Component {
+            render() {
+              return (
+                &lt;div&gt;
+                  &lt;p&gt;{this.props.<strong>title</strong>}}&lt;/p&gt;
+                  &lt;ul className=“list”&gt; 
+                    {this.props.<strong>list</strong>.map(element => &lt;li key={element.id}&gt;{element.name}}&lt;/li&gt;)}
+                  &lt;/ul&gt;
+                &lt;/div&gt;
+              )
+            }
+          }
+          export default List;
+        </pre>
+        </div>
+        <div style="position: relative;">
+        <p class="pre-label">Plik App.js</p>
+        <pre>
+
+          import List from "./components/List.js"
+          class App extends React.Component {
+            render() {
+              return  (
+                &lt;List <strong>title</strong>="Lista rzeczy do kupienia" <strong>list</strong>={[{id:1, name:"Przedmiot 1"}, {id:2, name:"Przedmiot 2"}]}/&gt;
+              );
+            }
+          }              
+        </pre>
+        </div>
+      </article>
+      
+      <article>
+        <h3>State</h3>
+        <pre>
+
+            class SearchBar extends React.Component {
+              state = {
+                  phrase: ""
+              }          
+              onInputChange = (event) => {
+                  this.setState({
+                      phrase: event.target.value
+                  });
+              }
+              render() {
+                  return (
+                      &lt;form&gt;
+                          &lt;label&gt;{this.props.label}&lt;/label&gt;
+                          &lt;input 
+                              type="text" 
+                              value={this.state.phrase}
+                              onChange={this.onInputChange}
+                          /&gt;
+                          &lt;div&gt;Result word is: {this.state.phrase}&lt;/div&gt;
+                      &lt;/form&gt;
+                  )
+              }
+          }
+        </pre>
       </article>
 
-      <!-- EXAMPLE 3: Slide with table -->
       <article>
-          <h3>Tables are exciting</h3>
-          <p>Buying/adopting a cat:</p>
-          <table>
-              <tbody>
-              <tr>
-                <th>
-                    Pros
-                </th>
-                <th>
-                    Cons
-                </th>
-              </tr>
-              <tr>
-                  <td>
-                    making pictures and sharing them on facebook
-                  </td>
-                  <td>
-                    it will hate me
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      I can play with it and pet it
-                  </td>
-                  <td>
-                      I will take numerous wounds
-                  </td>
-              </tr>
-              </tbody>
-          </table>
-          <p>My advice: <strong class="pink">get a dog</strong></p>
+        <h3>Life cycle methods</h3>
+        <pre>
+
+          class App extends React.Component {
+            componentDidMount() {
+              ...
+            }
+
+            componentDidUpdate(prevProps) {
+              ...
+            }
+
+            componentWillUnmount() {
+              ...
+            }
+          }
+        </pre>
       </article>
 
-      <!-- EXAMPLE 4: Customization and JS -->
-      <!-- onslideenter attribute allows you to run some JS code whenever slide is loaded
-        similarly onslideleave will run your code when slide is unloaded
-      -->
-      <!-- <article onslideenter="slideLoaded()"> -->
-          <!-- Custom JS -->
-          <!-- <script> -->
-              <!-- function slideLoaded() { -->
-                  <!-- alert('This slide is ready!'); -->
-              <!-- } -->
-          <!-- </script> -->
-          <!-- Custom CSS -->
-          <!-- <style> -->
-            <!-- .custom { -->
-                <!-- color: gold; -->
-                <!-- font-size: 150%; -->
-            <!-- } -->
-
-            <!-- .my-iframe { -->
-                <!-- height: 400px; -->
-                <!-- margin-top: 20px; -->
-            <!-- } -->
-          <!-- </style> -->
-
-          <!-- <h3>PRO usage of slides</h3> -->
-          <!-- <p>This is something <span class="custom">custom</span></p> -->
-
-          <!-- embedding stuff? why not -->
-          <!-- <iframe class="my-iframe" src="https://www.youtube.com/embed/dhUFxaauNTE" frameborder="0" allowfullscreen></iframe> -->
-      <!-- </article> -->
 
       <!-- Thank you slide -->
       <article class='thank_you_slide'>
-        <h2><span class="icon icon-smiley-alt pink"></span> Thank You!</h2>
+        <h2><span class="icon icon-smiley-alt pink"></span> Dziękujemy!</h2>
         <div class='contact_me'>
           <!-- if you don't like icons used here you can easily change them by changing class names - see http://shoestrap.org/downloads/elusive-icons-webfont/ -->
-          <span class="icon icon-pencil-alt"></span> <a href='mailto:you@makingwaves.pl'>you@makingwaves.pl</a><br/>
+          <span class="icon icon-pencil-alt"></span> <a href='mailto:you@.pl'>you@.pl</a><br/>
           <span class="icon icon-github"></span> <a href='https://github.com/you'>you</a><br/>
           <span class="icon icon-paper-clip"></span> <a href='http://goo.gl/your-short-url-to-this-presentation'>goo.gl/your-short-url-to-this-presentation</a></span>
-        </div>
-      </article>
-
-      <!-- Slide with an inspiring quote -->
-      <article id='quote_slide'>
-        <q>
-          With great power there must also come great responsibility!
-        </q>
-        <div class='author'>
-          Stan Lee
         </div>
       </article>
 
