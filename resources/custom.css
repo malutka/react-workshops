@@ -126,3 +126,11 @@ pre {
 	font-size: 75%;
 	background: white;
 }
+
+.thank_you_slide {
+	text-align: center;
+}
+
+.thank_you_slide h1 {
+	font-size: 70px;
+}

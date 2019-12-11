@@ -16,7 +16,7 @@
 
 <html>
   <head>
-    <title>Presentation</title>
+    <title>It's React Time!</title>
 
     <meta charset='utf-8'>
 
@@ -43,6 +43,9 @@
         <h1>It's React Time</h1>
         <h2>Wprowadzenie w podstawy React</h2>
 
+        <br />
+        <br />
+        <p>https://git.io/Je9M1</p>
         <div class="title_info">
           Prowadzące:
           <br />
@@ -379,16 +382,133 @@
         </pre>
       </article>
 
+      <article>
+        <h3>Stylowanie inline</h3>
+        <pre>
+
+          class App extends React.Component {
+            render() {
+              return (
+                &lt;div
+                  style={{
+                    backgroundColor: lightblue,
+                    marginTop: 36
+                  }}
+                &gt;
+                  &lt;h1
+                    style={{
+                      fontFamily: "Helvetica, sans-serif"
+                    }}
+                  &gt;
+                    Lista przedmiotów
+                  &lt;/h1&gt;
+                  &lt;ul&gt;
+                    &lt;li&gt;Przedmiot 1&lt;/li&gt;
+                    &lt;li&gt;Przedmiot 2&lt;/li&gt;
+                  &lt;/ul&gt;
+                &lt;/div&gt;
+              )
+            }
+          }
+        </pre>
+      </article>
+
+      <article>
+        <h3>Stylowanie inline</h3>
+        <pre>
+
+          const styles = {
+            container : {
+              backgroundColor: lightblue,
+              marginTop: 36
+            },
+            title : {
+              fontFamily: "Helvetica, sans-serif"
+            }
+          }
+
+          class App extends React.Component {
+            render() {
+              return (
+                &lt;div style={styles.container}&gt;
+                  &lt;h1 style={styles.title}&gt;
+                    Lista przedmiotów
+                  &lt;/h1&gt;
+                  &lt;ul&gt;
+                    &lt;li&gt;Przedmiot 1&lt;/li&gt;
+                    &lt;li&gt;Przedmiot 2&lt;/li&gt;
+                  &lt;/ul&gt;
+                &lt;/div&gt;
+              )
+            }
+          }
+        </pre>
+      </article>
+      <article>
+        <h3>Stylowanie inline - problemy</h3>
+        <ul>
+          <li>duplikacja wartości</li>
+          <li>brak wsparcia dla pseudoklas</li>
+          <li>brak wsparcia dla media queries</li>
+          <li>brak wsparcia dla keyframes</li>
+        </ul>
+
+        <pre>
+          //plik ze zmiennymi
+
+          const baseMargin = '36';
+          const smallMargin = '20';
+          export default {
+            baseMargin,
+            smallMargin,
+          };
+        </pre>
+      </article>
+
+      <article>
+        <h3>Stylowanie - biblioteki CSS-in-JS</h3>
+        <ul>
+            <li>Styled Components</li>
+            <li>Aphrodite</li>
+            <li>Radium</li>
+            <li>JSS</li>
+            <li>Emotion</li>
+          </ul>
+      </article>
+      <article>
+        <h3>Stylowanie - CSS Modules</h3>
+        <pre>
+          //plik App.module.css
+          .Container {
+            background-color: lightblue;
+            margin-top: 36px;
+          }
+
+          .Title {
+            fontFamily: Helvetica, sans-serif;
+          }
+        </pre>
+        <pre>
+          //plik App.js
+          import styles from "./App.module.css";
+          class App extends React.Component {
+            render() {
+              return (
+                &lt;div className={styles.Container}&gt;
+                  &lt;h1 className={styles.Title}&gt;To jest tytuł&lt;/h1&gt;
+                &lt;/div&gt;
+              )
+            }
+          }
+        </pre>
+        <p>Klasy, które zobaczymy w inspektorze, to np. <code>_src_App_module__Container</code>, <code>_src_App_module__Title</code></p>
+      </article>
+
+
 
       <!-- Thank you slide -->
       <article class='thank_you_slide'>
-        <h2><span class="icon icon-smiley-alt pink"></span> Dziękujemy!</h2>
-        <div class='contact_me'>
-          <!-- if you don't like icons used here you can easily change them by changing class names - see http://shoestrap.org/downloads/elusive-icons-webfont/ -->
-          <span class="icon icon-pencil-alt"></span> <a href='mailto:you@.pl'>you@.pl</a><br/>
-          <span class="icon icon-github"></span> <a href='https://github.com/you'>you</a><br/>
-          <span class="icon icon-paper-clip"></span> <a href='http://goo.gl/your-short-url-to-this-presentation'>goo.gl/your-short-url-to-this-presentation</a></span>
-        </div>
+        <h1>Dziękujemy!</h1>
       </article>
 
     </section>
