@@ -29,7 +29,7 @@
     <link rel="stylesheet"  href='resources/styles.css'>
     <!-- Some nice icons - check them out: http://shoestrap.org/downloads/elusive-icons-webfont/ -->
     <link rel="stylesheet" href="resources/elusive-webfont/css/elusive-webfont.css">
-    <!-- Making Waves specific styles -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="resources/custom.css">
   </head>
 
@@ -45,7 +45,6 @@
 
         <br />
         <br />
-        <p>https://git.io/Je9M1</p>
         <div class="title_info">
           Prowadzące:
           <br />
@@ -60,11 +59,19 @@
       <article>
         <h3>Wymagania</h3>
         <p>Zainstalowane: <strong>node</strong> oraz <strong>npm</strong></p>
+        <p>W terminalu należy wykonać: <code> npm install create-react-app </code></p>
         <br />
         <br />
         <h3>Tworzenie projektu</h3>
-        <p>npx create-react-app <strong>&lt;nazwa-projektu&gt;</strong></p>
-        <p>npm start</p>
+        <p>W terminalu należy wywołać: </p>
+        <p><code>npx create-react-app <strong>nazwa-projektu</strong></code></p>
+        <br />
+        <br />
+        <h3>Uruchomienie projektu</h3>
+        <p>W terminalu po przejściu do katalogu <code><strong>nazwa-projektu</strong></code> należy wykonać:</p>
+        <p><code>npm start</code></p>
+        <p>Projekt powinien uruchomić się pod adresem <code>http://localhost:3000</code>. Jeśli tak się nie stało, prawdopodobnie port 3000
+        był zajęty i w terminalu znajdziemy informację, pod jakim adresem jest uruchomiona aplikacja.</p>
       </article>
 
       <article>
@@ -186,10 +193,16 @@
           <li>Do wartości propsa dostajemy się poprzez <code>this.props.<strong>nazwa_atrybutu</strong></code> - tak jak na poprzednim slajdzie widzimy:
           komponent <code>List</code> dostaje tablicę jako atrybut <code>list</code> oraz tekst jako atrybut <code>title</code>. Możemy się do nich dostać
           wewnątrz komponentu poprzed odwołanie się do <code>this.props.list</code> oraz <code>this.props.title</code>.</li>
+          <li>Gdy zmienią się wartości propsów (nastąpi ich aktualizacja z komponentu wyżej), React przerenderowuje komponent.</li>
+          <li>Jako props możemy przekazać wartość - wtedy w komponencie używamy <code>this.props.propsName</code>, albo możemy przekazać metodę - 
+          wtedy w komponencie możemy wywołać tę metodę: <code>this.props.propsName()</code>.</li>
+          <li>Czasem możemy chcieć przekazać do komponentu wynik jakiejś metody, wtedy po prostu robimy: <code>propsName={this.foo()}</code>, 
+          a w komponencie używamy jako <code>this.props.propsName</code>.</li>
           <li>Gdy do wyświetlania listy korzystamy z <code>map</code>, musimy pamiętać, że każdy element/komponent zwracany przez <code>map</code> musi mieć ustawiony atybut <code>key</code>.
           <code>Key</code> musi posiadać unikalną wartość - najczęściej jest to <strong>id</strong>.</li>
           <li>Nie zaleca się ustawiania jako <code>key</code> kolejnej wartości iteracji - używana tablica może być tylko posortowana inaczej, co powoduje,
-          że wcześniejsze indeksy iteracji odpowiadają teraz innym elementom, przez co React przerenderuje wszystkie elementy, zamiast tylko te, które się zmieniły.</li>
+          że wcześniejsze indeksy iteracji odpowiadają teraz innym elementom, przez co React przerenderuje wszystkie elementy, zamiast tylko te, które 
+          się zmieniły.</li>
         </ul>
       </article>
       <article>
@@ -263,25 +276,114 @@
       </article>
 
       <article>
+        <h3>State</h3>
+        <p>State można utworzyć na dwa sposoby:</p>
+        <pre>
+           class SearchBar extends React.Component {
+             constructor(props) {
+               super(props);
+               this.state = { 
+                 phrase: ""
+                }
+             }
+           }</pre>
+           <p>lub:</p>
+           <pre>
+             class SearchBar extends React.Component {
+               state = {
+                 phrase: ""
+               }
+             }
+           </pre>
+        <p>Używając konstruktora obowiązkowym jest przekazanie mu <code>props</code> i w pierwszej linii ciała konstruktora wywołanie 
+        <code>super(props)</code>. Dzięki temu nie "zgubimy" propsów komponentu-rodzica i będziemy mogli z nich korzystać (o ile jakieś są).</p>
+      </article>
+
+      <article>
+        <h3>State</h3>
+        <p>W stanie możemy przechowywać dowolne struktury:</p>
+        <pre>
+          state = {
+            title: "To jest tytuł",
+            list: [ "jabłko", "gruszka", "banan" ],
+            counter: 5,
+            pagination: {
+              page: 1,
+              total: 24,
+              offset: 10
+            },
+            checked: true
+          }</pre>
+          <p>Gdy chcemy zaktualizować stan, używamy <code>this.setState():</code></p>
+          <pre>
+            this.setState({
+              checked: false,
+              title: "To jest fajny tytuł"
+            });</pre>
+      </article>
+
+      <article>
+        <h3>State</h3>
+        <ul>
+          <li><strong>State</strong> jest obiektem przechowującym wartości stanu komponentu.</li>
+          <li>Zmiana stanu komponentu (użycie <code>this.setState()</code>) informuje Reacta, że należy przerenderować komponent.</li>
+          <li>używając <code>setState()</code> ustawiamy nową wartość tylko dla tej składowej, która nas interesuje - pozostałe składowe pomijamy. 
+            Nie musimy przepisywać całej zawartości obiektu stanu - React samodzielnie dba o zachowanie wszystkich innych składowych stanu.</li>
+          <li><strong>Nie wolno</strong> wywoływać <code>this.setState()</code> w metodzie <code>render()</code> komponentu! W konsoli zobaczymy 
+            informację o niedozwolonej operacji. Pamiętajcie, że zmiana stanu powoduje przerenderowanie komponentu, czyli wywołanie metody <code>render()</code>.</li>
+          <li>W stanie trzymamy tylko to, co jest nam koniecznie potrzebne do prawidłowego działania komponentu i jednocześnie powinno być zmieniane tylko 
+            w obrębie tego komponentu, np:
+            <ul>
+              <li>dane pobrane z API,</li>
+              <li>wartości inputów,</li>
+              <li>stany checkboxów i radio buttonów (selected: true/false),</li>
+              <li>stan pobierania danych (isLoading: true/false, isLoaded: true/false),</li>
+              <li>listy, które są w tym komponencie sortowane</li>
+            </ul>
+          </li>
+        </ul>
+      </article>
+
+      <article>
         <h3>Renderowanie komponentów</h3>
         <pre>
           class App extends React.Component {
+            <strong>state = {
+              priority: "Bardzo ważne"  
+            }</strong>
             <strong>getDescription()</strong> = () => {
               return ‘Lista zakupów na dzisiejszą kolację’;
             }
             render() {
               return ( 
                 &lt;div style=<strong>{{marginTop:</strong> 20px;<strong>}}</strong>&gt;
-                  &lt;p&gt;<strong>{getDescription()}</strong>&lt;/p&gt;
+                  &lt;p&gt;<strong>{this.state.priority}</strong> : <strong>{this.getDescription()}</strong>&lt;/p&gt;
                   &lt;ul <strong>className</strong>="list"&gt;
-                    &lt;li&gt;{this.props.list[0].name}&lt;/li&gt;
-                    &lt;li&gt;{this.props.list[1].name}&lt;/li&gt;
+                    &lt;li&gt;{<strong>this.props</strong>.list[0].name}&lt;/li&gt;
+                    &lt;li&gt;{<strong>this.props</strong>.list[1].name}&lt;/li&gt;
                   &lt;/ul&gt;
                 &lt;/div&gt;
               )
             }
           }</pre>
       </article>
+
+      <article>
+        <h3>Renderowanie komponentów</h3>
+        <ul>
+          <li>Gdy osadzamy style inline, zawsze zewnętrzne nawiasy klamrowe informują Reacta, że będziemy "korzystać z JSa", 
+            zaś wewnętrzne nawiasy klamrowe tworzą obiekt, w którym definiujemy pary <code>nazwaWłasności : wartość</code> oddzielone od siebie przecinkiem.</li>
+          <li>W stylach inline wszystkie własności piszemy używając notacji camelCase.</li>
+          <li>Chcąc nadać elementowi HTMLowemu klasę używamy atrybutu <code>className</code>, gdyż <code>class</code> jest w JavaScripcie słowem zarezerwowanym.</li>
+          <li>By wyświetlić prostą wartość propsa, odwołujemy się do niego w nawiasach klamrowych poprzez <code>this.props.propsName</code>.</li>
+          <li>By wyświetlić prostą wartość stanu (state), odwołujemy się do niego w nawiasach klamrowych poprzez <code>this.state.stateName</code>.</li>
+          <li>Aby wyświetlić wynik działania metody komponentu, należy ją wywołać w nawiasach klamrowych: <code>this.methodName()</code>.</li>
+          <li>By wykonać pewną logikę JavaScriptową w JSXie, należy ją osadzić w nawiasach klamrowych, na przykład:
+            <pre>{ this.state.isLoading ? &lt;Loader /&gt; : &lt;List /&gt; }</pre>
+          </li>
+        </ul>
+      </article>
+
       <article>
         <h3>Life cycle methods</h3>
         <pre>
@@ -300,6 +402,8 @@
             }
           }
         </pre>
+
+        <p>Więcej informacji o metodach cyklu życia komponentu <a href="https://pl.reactjs.org/docs/react-component.html">tutaj</a>.</p>
       </article>
 
       <article>
@@ -427,9 +531,9 @@
 
 
       <!-- Thank you slide -->
-      <article class='thank_you_slide'>
+      <!-- <article class='thank_you_slide'>
         <h1>Dziękujemy!</h1>
-      </article>
+      </article> -->
 
     </section>
 

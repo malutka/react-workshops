@@ -18,48 +18,34 @@
 }
 .slides > article.far-past {
 	display: block;
-	transform: translate(0);
-	-o-transform: translate(0);
-	-moz-transform: translate(0);
-	-webkit-transform: translate3d(0,0,0);
+	transform: none;
   }
   .slides > article.past {
 	display: block;
-	transform: translate(0);
-	-o-transform: translate(0);
-	-moz-transform: translate(0);
-	-webkit-transform: translate3d(0,0,0);
+	transform: none;
   }
   .slides > article.current {
 	display: block;
-	transform: translate(0);
-	-o-transform: translate(0);
-	-moz-transform: translate(0);
-	-webkit-transform: translate3d(0,0,0);
+	transform: none;
 	opacity: 1;
 	z-index: 1;
   }
   .slides > article.next {
 	display: block;
-	transform: translate(0);
-	-o-transform: translate(0);
-	-moz-transform: translate(0);
-	-webkit-transform: translate3d(0,0,0);
+	transform: none;
   }
   .slides > article.far-next {
 	display: block;
-	transform: translate(0);
-	-o-transform: translate(0);
-	-moz-transform: translate(0);
-	-webkit-transform: translate3d(0,0,0);
+	transform: none;
   }
 
 article:not(.nologo) {
 	background: white;
+	overflow-y: auto;
 }
 article:before {
 	content: counter(page);
-    position: absolute;
+    position: fixed;
     counter-increment: page;
     bottom: 10px;
     font-size: 70%;
@@ -69,8 +55,8 @@ article:before {
 }
 article:not(.title_slide)::after {
 	content: "It's React Time";
-	position: absolute;
-	right: 20px;
+	position: fixed;
+	right: 60px;
 	bottom: 10px;
 	font-size: 70%;
 }
@@ -112,7 +98,11 @@ h3 + iframe {
 	color: rgb(244, 58, 109); /* this is our official pink color */
 }
 
+code {
+	font-family: 'Roboto Mono','Courier New', monospace;
+}
 pre {
+	font-family: 'Roboto Mono','Courier New', monospace;
 	overflow: auto;
 	max-height: calc(100% - 130px);
 }
@@ -133,4 +123,20 @@ pre {
 
 .thank_you_slide h1 {
 	font-size: 70px;
+}
+li > ul:first-child {
+	margin-top: 10px;
+	margin-left: 40px;
+}
+table pre {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+li > pre {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+table {
+	table-layout: fixed;
 }
