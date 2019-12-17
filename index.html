@@ -57,28 +57,6 @@
         </div>
       </article>
 
-      <!-- EXAMPLES -->
-      <!-- some options for all slides:
-        - add class "smaller" to <article> if you prefer smaller text
-        - add class "nologo" to <article> to remove MW logo from lower-rigth corner
-        - add class "pink" to anything to get MW pink on text
-      -->
-      <!-- EXAMPLE 1: Slide with some text, bullet points and image -->
-      <!-- <article> -->
-          <!-- <h3>Slide title</h3> -->
-          <!-- <p>Some interesting info about cats:</p> -->
-          <!-- Note class "build" used here it indicates that each point of this list requires action before showing up -->
-          <!-- <ul class="build"> -->
-              <!-- <li>They are cute and furry</li> -->
-              <!-- <li>They eat only good food and require diverse diet</li> -->
-              <!-- <li>They feel superior to people</li> -->
-              <!-- <li> -->
-                  <!-- adding images can't be simpler -->
-                  <!-- <img src="http://html5slides.googlecode.com/svn/trunk/template/images/example-cat.jpg" style='height: 200px'/> -->
-              <!-- </li> -->
-          <!-- </ul> -->
-      <!-- </article> -->
-
       <article>
         <h3>Wymagania</h3>
         <p>Zainstalowane: <strong>node</strong> oraz <strong>npm</strong></p>
@@ -90,209 +68,78 @@
       </article>
 
       <article>
-        <h3>Struktura plików</h3>
-        <img src="" alt="wstawić obrazek!" />
-      </article>
-
-      <article>
-        <h3>Pierwszy komponent</h3>
+        <h3>Komponenty</h3>
+        <p>Każdy komponent Reactowy musi zawierać:</p>
         <pre>
-
+          import React from "react";        </pre>
+        <p>Zazwyczaj "główny" plik JS-owy to index.js, który wygląda w ogólnym zarysie tak:</p>
+        <pre>
           import React from "react";
-          import ... from "react-dom";
-        </pre>
+          import ReactDOM from 'react-dom';
+
+          import App from './components/App';
+
+          ReactDOM.render(
+              &lt;App /&gt;,
+              document.querySelector('#root')
+          );        </pre>
+        <p>gdzie:</p>
+        <ul>
+          <li><code>import ReactDOM from 'react-dom';</code> jest potrzebne tylko wtedy, gdy korzystamy z <code>ReactDOM.render()</code></li>
+          <li><code>ReactDOM.render</code> jako pierwszy parametr przyjmuje nasz główny komponent <strong>App</strong>, a jako drugi identyfikator kontenera, w jakim chcemy osadzić naszą aplikację</li>
+        </ul>
       </article>
       <article>
         <h3>Function based component</h3>
         <pre>
-      
           const App = function() {
               return &lt;div&gt;Hi there!&lt;/div&gt;
-          }          
-        </pre>
+          }          </pre>
         <p>lub</p>
         <pre>
-      
           const App = () => {
               return &lt;div&gt;Hi there!&lt;/div&gt;
-          }            
-        </pre>
-        <p>//todo: może wstawić linka do zewnetrznej strony gdzie omawiane sa arrow functions oraz this?</p>
+          }            </pre>
+        <ul>
+          <li>nie ma tu metody <code>render</code>, zamiast metod cyklu życia używa się tzw. "hooków"</li>
+          <li><strong>state</strong> jest definiowany za pomocą hook'a <code>useState</code></li>
+          <li>W <code>return ()</code> znajduje się to, co komponent ma "narysować"</li>
+        </ul>
+        <p><br /><br />Powyższe informacje są bardzo ogólnikowe, jako że na warsztatach uczymy się używać komponentów klasowych.</p>
       </article>
       <article>
         <h3>Class based component</h3>
         <pre>
-
+          import React from "react";
           class App extends React.Component {
-
             render() {
               return &lt;div&gt;Hi there!&lt;/div&gt;
             }
-
           }              
-        </pre>
+          export default App;</pre>
         <pre>
-
           import React, {Component} from "react";
-
-          class App extends Component {
-            ...
+          class App extends Component {          
+            render() {
+              return &lt;div&gt;Hi there!&lt;/div&gt;
+            }
           }
-        </pre>
-      </article>
-
-      <article>
-        <h3>Wyświetlanie komponentu</h3>
-        <pre>
-
-            ReactDOM.render (
-              <strong>&lt;NazwaKomponentu&gt;</strong>,
-              document.querySelector(“<strong>identyfikator-kontenera</strong>”)
-              )              
-        </pre>
-
-        <pre>
-
-            ReactDOM.render (
-              &lt;App /&gt;,
-              document.querySelector(“#root”)
-            )              
-        </pre>
+          export defauult App;</pre>
+          <p>Powyższe zapisy różnią się tylko tym, jak korzystamy z <code>React.Component</code>. </p>
+          <p>W komponentach klasowych metodą odpowiadającą za "rysowanie" komponentu jest <code>render()</code>. Oprócz tego mamy dostęp do metod cyklu życia (o czym później).</p>
       </article>
 
       <article>
         <h3>JSX</h3>
         <ul>
           <li>Pozornie wygląda bardzo znajomo jak HTML, jednak nie jest to HTML :)</li>
-          <li>Przeglądarki nie rozumieją JSX - potrzebny jest Babel do kompilacji</li>
+          <li>Przeglądarki nie rozumieją JSX - potrzebny jest Babel do kompilacji. Korzystając z <strong>create-react-app</strong> nie martwimy się tym - paczka ma już skonfigurowanego webpacka z babelem</li>
           <li>Jest wygodny w używaniu i ułatwia rozumienie/czytanie kodu</li>
           <li>Nie musicie go używać, ale jest rekomendowany</li>
+          <li>zawiera komponenty oraz JS-ową logikę</li>
+          <li>żeby "jawnie" pokazać, że korzysta się z JSXa, używa się nawiasów okrągłych <code><strong>(</strong>&lt;div&gt;Witaj świecie!&lt;/div&gt;<strong>)</strong></code></li>
+          <li>by poinformować kompilator, że w JSXie schce się skorzystać z logiki JS-owej bądź wyświetlić wartość zmiennej, należy użyć nawiasów klamrowych <code>(&lt;div&gt;Witaj <strong>{</strong>name<strong>}</strong>!&lt;/div&gt;)</code></li>
         </ul>
-      </article>
-
-      <article>
-        <h3>Renderowanie komponentu</h3>
-        <pre>
-
-          class App extends React.Component {
-            render() {
-              return &lt;div&gt;&lt;ul&gt;
-                &lt;li&gt;Przedmiot 1&lt;/li&gt;
-                &lt;li&gt;Przedmiot 2&lt;/li&gt;
-                &lt;/ul&gt;&lt;/div&gt;
-            }
-          }          
-        </pre>
-      </article>
-
-
-      <article>
-        <h3>Renderowanie komponentu</h3>
-        <pre>
-
-          class App extends React.Component {
-            render() {
-              return 
-                &lt;div&gt;
-                  &lt;ul&gt;
-                    &lt;li&gt;Przedmiot 1&lt;/li&gt;
-                    &lt;li&gt;Przedmiot 2&lt;/li&gt;
-                  &lt;/ul&gt;
-                &lt;/div&gt;
-            }
-          }          
-        </pre>
-      </article>
-
-      <article>
-        <h3>Renderowanie komponentu</h3>
-        <pre>
-
-          class App extends React.Component {
-            render() {
-              return <strong class="red">(</strong> 
-                &lt;div&gt;
-                  &lt;ul&gt;
-                    &lt;li&gt;Przedmiot 1&lt;/li&gt;
-                    &lt;li&gt;Przedmiot 2&lt;/li&gt;
-                  &lt;/ul&gt;
-                &lt;/div&gt;
-              <strong class="red">)</strong>
-            }
-          }          
-        </pre>
-      </article>
-
-      <article>
-        <h3>Style i klasy</h3>
-        <pre>
-
-          class App extends React.Component {
-            render() {
-              return ( 
-                &lt;div style="margin-top: 20px;"&gt;
-                  &lt;ul class="list"&gt;
-                    &lt;li&gt;Przedmiot 1&lt;/li&gt;
-                    &lt;li&gt;Przedmiot 2&lt;/li&gt;
-                  &lt;/ul&gt;
-                &lt;/div&gt;
-              )
-            }
-          }          
-        </pre>
-      </article>
-
-      <article>
-        <h3>Style i klasy</h3>
-        <pre>
-
-          class App extends React.Component {
-            render() {
-              return ( 
-                &lt;div style=<strong>{{marginTop:</strong> 20px;<strong>}}</strong>&gt;
-                  &lt;ul <strong>className</strong>="list"&gt;
-                    &lt;li&gt;Przedmiot 1&lt;/li&gt;
-                    &lt;li&gt;Przedmiot 2&lt;/li&gt;
-                  &lt;/ul&gt;
-                &lt;/div&gt;
-              )
-            }
-          }          
-        </pre>
-      </article>
-
-      <article>
-        <h3>Wyświetalnie zmiennych JS w JSX</h3>
-        <pre>
-
-          function <strong>getDescription()</strong> {
-            return ‘Lista zakupów na dzisiejszą kolację’;
-          }
-          
-          const App = () => {
-              
-            const <strong>listTitle</strong> = ‘Moja lista’;
-            const <strong>subtitle</strong> = { text: ‘jedzenie’}
-              
-            return  (
-              &lt;div style={{ marginTop: ‘20px’ }}&gt;
-                &lt;h1&gt;<strong>{listTitle}</strong>&lt;/h1&gt;
-                &lt;h2&gt;<strong>{subtitle.text}</strong>&lt;/h2&gt;
-                &lt;p&gt;<strong>{getDescrption()}</strong>&lt;/p&gt;
-              
-                &lt;p&gt;Lista składników&lt;/p&gt;
-                &lt;ul className=“list”&gt; 
-                  &lt;li&gt;Przedmiot 1&lt;/li&gt;
-                  &lt;li&gt;Przedmiot 2&lt;/li&gt;
-                &lt;/ul&gt;
-              
-                &lt;p&gt;Lista rzeczy do kupienia&lt;/p&gt;
-                &lt;ul&gt;….&lt;/ul&gt;
-              
-              &lt;/div&gt;
-            );
-          }              
-        </pre>
       </article>
 
       <article>
@@ -331,11 +178,65 @@
         </pre>
         </div>
       </article>
+
+      <article>
+        <h3>Props</h3>
+        <ul>
+          <li><strong>Propsami</strong> nazywamy te wartości, które przekazujemy komponentowi jako atrybuty. </li>
+          <li>Do wartości propsa dostajemy się poprzez <code>this.props.<strong>nazwa_atrybutu</strong></code> - tak jak na poprzednim slajdzie widzimy:
+          komponent <code>List</code> dostaje tablicę jako atrybut <code>list</code> oraz tekst jako atrybut <code>title</code>. Możemy się do nich dostać
+          wewnątrz komponentu poprzed odwołanie się do <code>this.props.list</code> oraz <code>this.props.title</code>.</li>
+          <li>Gdy do wyświetlania listy korzystamy z <code>map</code>, musimy pamiętać, że każdy element/komponent zwracany przez <code>map</code> musi mieć ustawiony atybut <code>key</code>.
+          <code>Key</code> musi posiadać unikalną wartość - najczęściej jest to <strong>id</strong>.</li>
+          <li>Nie zaleca się ustawiania jako <code>key</code> kolejnej wartości iteracji - używana tablica może być tylko posortowana inaczej, co powoduje,
+          że wcześniejsze indeksy iteracji odpowiadają teraz innym elementom, przez co React przerenderuje wszystkie elementy, zamiast tylko te, które się zmieniły.</li>
+        </ul>
+      </article>
+      <article>
+        <h3>Props - przykład</h3>
+        <table>
+          <tr>
+            <th>Sortowanie wg ceny</th>
+            <th>Sortowanie wg nazwy</th>
+          </tr>
+          <tr>
+            <td><pre>list = [{id: 1, name: "gruszka", price: 2},
+        {id: 2, name: "jabłko", price: 2},
+        {id: 3, name: "banany", price: 5},
+        {id: 4, name: "kaki", price: 7}]</pre></td>
+            <td><pre>list = [{id: 3, name: "banany", price: 5},
+        {id: 1, name: "gruszka", price: 2},
+        {id: 2, name: "jabłko", price: 2},
+        {id: 4, name: "kaki", price: 7}]</pre></td>
+          </tr>
+        </table>
+        <table>
+            <tr>
+              <th>Id jako key</th>
+              <th>Indeks iteracji jako key</th>
+            </tr>
+            <tr>
+              <td><pre>list.map( (element) => (
+    &lt;li key={element.id}&gt;name: {element.name}, price: {element.price}&lt;/li&gt
+  )
+)</pre></td>
+              <td><pre>list.map( (element, index) => (
+    &lt;li key={index}&gt;name: {element.name}, price: {element.price}&lt;/li&gt
+  )
+)</pre></td>
+            </tr>
+          </table>
+          <p>React tworzy sobie tzw. <strong>Virtual DOM</strong>, 
+          na podstawie którego renderuje drzewo DOM w przeglądarce. Gdy się coś zmienia to tworzy nowy Virtual DOM, porównuje go 
+        z poprzednim i na podstawie różnic decyduje, które elementy w drzewie DOM powinny się zmienić. Gdy jako key używamy np. id, React wie,
+      że zmieniła się tylko kolejność komponentów, zatem nie musi ich na nowo tworzyć w pamięci - może je tylko ustawić we właściwej kolejności.
+     Gdy korzystamy z indeksu iteracji, dla Reacta wszystkie albo prawie wszystkie komponenty (u nas <code>li</code>) się zmieniły - bo mają inne 
+    identyfikatory - zatem musi je na nowo utworzyć i wstawić do drzewa DOM, co nie jest optymalnym rozwiązaniem.</p>
+      </article>
       
       <article>
         <h3>State</h3>
         <pre>
-
             class SearchBar extends React.Component {
               state = {
                   phrase: ""
@@ -358,10 +259,29 @@
                       &lt;/form&gt;
                   )
               }
-          }
-        </pre>
+          } </pre>
       </article>
 
+      <article>
+        <h3>Renderowanie komponentów</h3>
+        <pre>
+          class App extends React.Component {
+            <strong>getDescription()</strong> = () => {
+              return ‘Lista zakupów na dzisiejszą kolację’;
+            }
+            render() {
+              return ( 
+                &lt;div style=<strong>{{marginTop:</strong> 20px;<strong>}}</strong>&gt;
+                  &lt;p&gt;<strong>{getDescription()}</strong>&lt;/p&gt;
+                  &lt;ul <strong>className</strong>="list"&gt;
+                    &lt;li&gt;{this.props.list[0].name}&lt;/li&gt;
+                    &lt;li&gt;{this.props.list[1].name}&lt;/li&gt;
+                  &lt;/ul&gt;
+                &lt;/div&gt;
+              )
+            }
+          }</pre>
+      </article>
       <article>
         <h3>Life cycle methods</h3>
         <pre>
