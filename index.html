@@ -71,7 +71,7 @@
         <p>W terminalu po przejściu do katalogu <code><strong>nazwa-projektu</strong></code> należy wykonać:</p>
         <p><code>npm start</code></p>
         <p>Projekt powinien uruchomić się pod adresem <code>http://localhost:3000</code>. Jeśli tak się nie stało, prawdopodobnie port 3000
-        był zajęty i w terminalu znajdziemy informację, pod jakim adresem jest uruchomiona aplikacja.</p>
+        jest zajęty i w terminalu znajdziemy informację, pod jakim adresem jest uruchomiona aplikacja.</p>
       </article>
 
       <article>
@@ -143,7 +143,7 @@
           <li>Przeglądarki nie rozumieją JSX - potrzebny jest Babel do kompilacji. Korzystając z <strong>create-react-app</strong> nie martwimy się tym - paczka ma już skonfigurowanego webpacka z babelem</li>
           <li>Jest wygodny w używaniu i ułatwia rozumienie/czytanie kodu</li>
           <li>Nie musicie go używać, ale jest rekomendowany</li>
-          <li>zawiera komponenty oraz JS-ową logikę</li>
+          <li>zawiera komponenty, elementy (odpowiedniki tagów HTML) oraz JS-ową logikę</li>
           <li>żeby "jawnie" pokazać, że korzysta się z JSXa, używa się nawiasów okrągłych <code><strong>(</strong>&lt;div&gt;Witaj świecie!&lt;/div&gt;<strong>)</strong></code></li>
           <li>by poinformować kompilator, że w JSXie schce się skorzystać z logiki JS-owej bądź wyświetlić wartość zmiennej, należy użyć nawiasów klamrowych <code>(&lt;div&gt;Witaj <strong>{</strong>name<strong>}</strong>!&lt;/div&gt;)</code></li>
         </ul>
@@ -193,7 +193,7 @@
           <li>Do wartości propsa dostajemy się poprzez <code>this.props.<strong>nazwa_atrybutu</strong></code> - tak jak na poprzednim slajdzie widzimy:
           komponent <code>List</code> dostaje tablicę jako atrybut <code>list</code> oraz tekst jako atrybut <code>title</code>. Możemy się do nich dostać
           wewnątrz komponentu poprzed odwołanie się do <code>this.props.list</code> oraz <code>this.props.title</code>.</li>
-          <li>Gdy zmienią się wartości propsów (nastąpi ich aktualizacja z komponentu wyżej), React przerenderowuje komponent.</li>
+          <li>Gdy zmienią się wartości propsów (nastąpi ich aktualizacja z komponentu wyżej), React aktualizuje lub przerenderowuje komponent.</li>
           <li>Jako props możemy przekazać wartość - wtedy w komponencie używamy <code>this.props.propsName</code>, albo możemy przekazać metodę - 
           wtedy w komponencie możemy wywołać tę metodę: <code>this.props.propsName()</code>.</li>
           <li>Czasem możemy chcieć przekazać do komponentu wynik jakiejś metody, wtedy po prostu robimy: <code>propsName={this.foo()}</code>, 
@@ -201,7 +201,7 @@
           <li>Gdy do wyświetlania listy korzystamy z <code>map</code>, musimy pamiętać, że każdy element/komponent zwracany przez <code>map</code> musi mieć ustawiony atybut <code>key</code>.
           <code>Key</code> musi posiadać unikalną wartość - najczęściej jest to <strong>id</strong>.</li>
           <li>Nie zaleca się ustawiania jako <code>key</code> kolejnej wartości iteracji - używana tablica może być tylko posortowana inaczej, co powoduje,
-          że wcześniejsze indeksy iteracji odpowiadają teraz innym elementom, przez co React przerenderuje wszystkie elementy, zamiast tylko te, które 
+          że wcześniejsze indeksy iteracji odpowiadają teraz innym elementom, przez co React przerenderuje/zaktualizuje wszystkie elementy, zamiast zaktualizować tylko te, które 
           się zmieniły.</li>
         </ul>
       </article>
@@ -241,10 +241,10 @@
           </table>
           <p>React tworzy sobie tzw. <strong>Virtual DOM</strong>, 
           na podstawie którego renderuje drzewo DOM w przeglądarce. Gdy się coś zmienia to tworzy nowy Virtual DOM, porównuje go 
-        z poprzednim i na podstawie różnic decyduje, które elementy w drzewie DOM powinny się zmienić. Gdy jako key używamy np. id, React wie,
-      że zmieniła się tylko kolejność komponentów, zatem nie musi ich na nowo tworzyć w pamięci - może je tylko ustawić we właściwej kolejności.
-     Gdy korzystamy z indeksu iteracji, dla Reacta wszystkie albo prawie wszystkie komponenty (u nas <code>li</code>) się zmieniły - bo mają inne 
-    identyfikatory - zatem musi je na nowo utworzyć i wstawić do drzewa DOM, co nie jest optymalnym rozwiązaniem.</p>
+        z poprzednim i na podstawie różnic decyduje, które elementy w drzewie DOM powinny się zmienić i w jakim zakresie. Gdy jako key używamy np. id,
+         React wie, że zmieniła się tylko kolejność komponentów, zatem jest w stanie zastosować najbardziej optymalny algorytm uaktualnienia drzewa DOM.
+     Gdy korzystamy z indeksu iteracji, dla Reacta wszystkie albo prawie wszystkie komponenty/elementy (u nas <code>li</code>) się zmieniły - bo mają inne 
+    identyfikatory - zatem algorytm aktualizacji komponentów i drzewa DOM zawiera dużo niepotrzebnych operacji i automatycznie jest znacznie mniej optymalny.</p>
       </article>
       
       <article>
@@ -386,23 +386,31 @@
 
       <article>
         <h3>Life cycle methods</h3>
-        <pre>
-
-          class App extends React.Component {
-            componentDidMount() {
-              ...
-            }
-
-            componentDidUpdate(prevProps) {
-              ...
-            }
-
-            componentWillUnmount() {
-              ...
-            }
-          }
-        </pre>
-
+        <p>Komponent w React może być w 3 stanach:</p>
+        <ul>
+          <li>Montowania - komponent jest dodany do drzewa DOM i wywoływane są metody:
+            <ul>
+              <li>constructor()</li>
+              <li>getDerivedStateFromProps()</li>
+              <li>render()</li>
+              <li>componentDidMount()</li>
+            </ul>
+          </li>
+          <li>Aktualizacji - zmiana właściwości (props) powoduje, że komponent powinien się przerenderować i wywoływane są metody:
+            <ul>
+              <li>getDerivedStateFromProps()</li>
+              <li>shouldComponentUpdate()</li>
+              <li>render()</li>
+              <li>getSnapshotBeforeUpdate()</li>
+              <li>componentDidUpdate()</li>
+            </ul>
+          </li>
+          <li>Odmontowywania - komponent jest usuwany z drzewa DOM i wywoływana jest metoda:
+            <ul>
+              <li>componentWillUnmount()</li>
+            </ul>
+          </li>
+        </ul>
         <p>Więcej informacji o metodach cyklu życia komponentu <a href="https://pl.reactjs.org/docs/react-component.html">tutaj</a>.</p>
       </article>
 
